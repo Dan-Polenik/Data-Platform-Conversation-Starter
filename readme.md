@@ -13,7 +13,7 @@ A tiny Spring Boot and Spring Integration app that turns HTTP events into `Platf
   * fetch the original payload by id
   * fetch the rolling metrics by topic and event
 
-### Component information found [here](./src/main/java/com/vertexinc/org/pdd/spring/integration/decomposition/service_oriented_app/readme.md)
+ Component information found [here](./src/main/java/com/vertexinc/org/pdd/spring/integration/decomposition/service_oriented_app/readme.md)
 
 ## Quick start
 
