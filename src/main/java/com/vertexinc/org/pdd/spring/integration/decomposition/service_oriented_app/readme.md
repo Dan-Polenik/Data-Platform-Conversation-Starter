@@ -23,8 +23,10 @@ This service is an event-oriented HTTP to channel bridge. We care about the **re
 Diagram: `Data-Platform.Components.png`
 
 ## Components
+![Component Diagram](../service_oriented_app/img/Data-Platform.Components.png "Component Diagram")
 
-**MVC Controller (ingest)**
+
+### **Integration Controller (ingest)**
 HTTP entry point at
 `/org/{org}/tenant/{tenant}/topic/{topic}/event/{event}`
 Builds a `PlatformRecord` with:
@@ -33,25 +35,26 @@ Builds a `PlatformRecord` with:
 * `transactionalMetadata` from HTTP headers and message headers
 * `operationalMetadata.TenantMetadata` from the path parts
 
-**Spring Integration channel**
+### **Spring Integration channel**
 Publish subscribe channel that fans out records. Writers and readers do not block each other.
 
-**Enrich to PlatformRecord**
+### **Enrich to PlatformRecord**
 Stateless step that wraps the request into the record shape described above.
 
-**Record sink**
+### **Record sink**
 Subscriber that writes the full record to `RecordStore`. Keyed by message id.
 
-**Amount metrics tap**
+### **Amount metrics tap**
 Subscriber that parses the JSON string only to read `amount`. Records it in Micrometer and persists a pandas describe style snapshot to `RecordStore` keyed by `topic.event`.
 
-**Read only data service**
+### **Read only data service**
 Thin service used by query controllers. No writes. Looks up by id or by `topic.event`.
 
-**Query controllers**
+### **Query controllers**
 
 * Metrics: `GET /metrics/topic/{topic}/event/{event}`
 * Payload by id: `GET /org/{org}/tenant/{tenant}/topic/{topic}/query/{event}?id={messageId}`
+
 
 ## Record first, content second
 
